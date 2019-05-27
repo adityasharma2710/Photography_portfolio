@@ -1,6 +1,9 @@
 <?php
     echo "welcome to home";
 ?>
+<?php session_start(); ?>
+<?php if(isset($_SESSION['username'])){ ?>
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,5 +14,15 @@
     <h1>Admin Panel</h1>
     <a href="upload_images.php">Upload Images</a>
     <a href="upload_album.php">Upload Album</a>
+    
+    <a href="logout.php">Logout</a>
+    
 </body>
-</html>
+</html>    
+    
+
+<?php } else {
+    header("location: ./login.php");
+} ?>
+
+<?php //session_destroy(); ?>
