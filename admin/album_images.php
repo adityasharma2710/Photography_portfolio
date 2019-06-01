@@ -1,8 +1,9 @@
-<?php session_start(); ?>
-<?php if(!isset($_SESSION['username'])){
-    header("location: ./login.php");
-} ?>
-    
+<?php
+    echo "Upload your Album's images here";
+    if(isset($_POST['album_submit'])){
+        $album_name = $_POST['album_name'];
+    }
+?>
 
 <?php
 
@@ -13,6 +14,27 @@
     require "./Vendor/php/class.upload.php";
     //echo date("d-m-Y H:i:s");
     if(isset($_POST['submit'])){
+        $album_name = $_POST['album_name'];
+        $date = date("Y-m-d H:i:s");
+        
+        $db->select('albums', ['album_name' => $album_name]);
+        if($db->row_array()){
+            // get id of existing row
+            $album_ID = ($db->row_array()['id']);
+        } else {
+            // create new row
+            $db->insert(
+                'albums', [
+                    'album_name' => $album_name,
+                    'date' => $date
+                ]
+            );
+            
+            $album_ID = $db->id();
+        }
+        
+        
+        echo "<br>welcome to your album now you can upload images";
         // Image Count
         $total = count($_FILES['image_fields']['name']);
         
@@ -112,13 +134,14 @@
               ini_set('max_execution_time', 300);
                 
               if ($handle->processed) {
-                $date = date("Y-m-d H:i:s");
+                
                 $img_url_raw = "files/raw/" . $_FILES['image_fields']['name'][$i];  
                 $img_url = $_FILES['image_fields']['name'][$i];  
                 $db->insert(
                     'images', [
                         'img_url_raw' => $img_url_raw,
                         'img_url' => $img_url,
+                        'album_id' => $album_ID,
                         'date' => $date
                     ]
                 );  
@@ -140,34 +163,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload Images</title>
-    
-    <style>
-        nav {
-            display: flex;
-            justify-content: center;
-            
-            background-color: darkgray;
-            padding: 5px;
-        }
-        
-        .btnn {
-            padding: 5px 10px;
-            background-color: white;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-    </style>
+    <title>Album Images</title>
 </head>
 <body>
     <nav>
         <a class="btnn btnn-logout" href="logout.php">Logout</a>
     </nav>
-    <h1>Upload Images</h1>
-    <form enctype="multipart/form-data" method="post" action="upload_images.php">
-      <input type="file" size="32" name="image_fields[]" value="" multiple>
-      <input type="submit" name="submit" value="upload">
-    </form>
+       <?php 
+            if(isset($album_name)){
+                echo "<h1>".$album_name."</h1>";       
+        ?>        
+            <h1>Upload Images</h1>
+            <form enctype="multipart/form-data" method="post" action="album_images.php">
+              <input type="file" size="32" name="image_fields[]" value="" multiple>
+              <input type="hidden" value="<?php echo $album_name ?>" name="album_name">
+              <input type="submit" name="submit" value="upload">
+            </form>
+        <?php } else {
+                header("location: upload_album.php");
+            }
+        ?>
+    
     
     <!-- To Prevent Data Submission on Refresh -->
     <script>
