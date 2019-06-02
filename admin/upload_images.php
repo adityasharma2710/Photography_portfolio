@@ -136,44 +136,22 @@
     
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload Images</title>
-    
-    <style>
-        nav {
-            display: flex;
-            justify-content: center;
-            
-            background-color: darkgray;
-            padding: 5px;
-        }
-        
-        .btnn {
-            padding: 5px 10px;
-            background-color: white;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-    <nav>
-        <a class="btnn btnn-logout" href="logout.php">Logout</a>
-    </nav>
+<?php include('header.php'); ?>
+<?php include('sidenav.php'); ?>
+   
+<div class="main">   
     <h1>Upload Images</h1>
     <form enctype="multipart/form-data" method="post" action="upload_images.php">
       <input type="file" size="32" name="image_fields[]" value="" multiple>
       <input type="submit" name="submit" value="upload">
     </form>
+</div>
+   
+<!-- To Prevent Data Submission on Refresh -->
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
     
-    <!-- To Prevent Data Submission on Refresh -->
-    <script>
-        if ( window.history.replaceState ) {
-            window.history.replaceState( null, null, window.location.href );
-        }
-    </script>
-</body>
-</html>
+<?php include('footer.php'); ?>

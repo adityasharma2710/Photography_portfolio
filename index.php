@@ -13,7 +13,8 @@
     <!-- CSS -->
     <link rel="stylesheet" href="Vendors/css/lightgallery.min.css">
     <link rel="stylesheet" href="Vendors/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700&display=swap" rel="stylesheet">
+
     
     <style>
         body {
@@ -95,9 +96,13 @@
           width: 0;
         }
         
-        .nav > ul > li > a:hover:after { 
+        .nav > ul > li > a:hover:after, .nav > ul > li > a.active:after { 
           width: 100%; 
           left: 0; 
+        }
+        
+        .active {
+          font-weight: 500;
         }
         
         .nav .fab {
@@ -148,6 +153,7 @@
             box-shadow: none;
             position: relative;
             /*transform: scale(1.05);*/
+            filter: brightness(1.1);
             box-shadow: 0 0 20px #6b6b6b;
         }
 
@@ -192,7 +198,7 @@
                <h3>ISKCON MONK</h3>
           </div>
        <ul>
-           <li><a href="#">Photostream</a></li>
+           <li><a class="active" href="#">Photostream</a></li>
            <li><a href="#">Album</a></li>
            <li><a href="#">About</a></li>
            <li><a href="#">Contact</a></li>

@@ -1,5 +1,9 @@
+<?php session_start(); ?>
+<?php if(!isset($_SESSION['username'])){
+    header("location: ./login.php");
+} ?>   
+
 <?php
-    echo "Upload your Album's images here";
     if(isset($_POST['album_submit'])){
         $album_name = $_POST['album_name'];
     }
@@ -159,37 +163,31 @@
     
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Album Images</title>
-</head>
-<body>
-    <nav>
-        <a class="btnn btnn-logout" href="logout.php">Logout</a>
-    </nav>
-       <?php 
-            if(isset($album_name)){
-                echo "<h1>".$album_name."</h1>";       
-        ?>        
-            <h1>Upload Images</h1>
-            <form enctype="multipart/form-data" method="post" action="album_images.php">
-              <input type="file" size="32" name="image_fields[]" value="" multiple>
-              <input type="hidden" value="<?php echo $album_name ?>" name="album_name">
-              <input type="submit" name="submit" value="upload">
-            </form>
-        <?php } else {
-                header("location: upload_album.php");
-            }
-        ?>
-    
-    
-    <!-- To Prevent Data Submission on Refresh -->
-    <script>
-        if ( window.history.replaceState ) {
-            window.history.replaceState( null, null, window.location.href );
+<?php include('header.php'); ?>
+<?php include('sidenav.php'); ?>
+ 
+<div class="main">
+    <?php 
+        if(isset($album_name)){
+            echo "<h1>".$album_name."</h1>";       
+    ?>        
+        <h1>Upload Images</h1>
+        <form enctype="multipart/form-data" method="post" action="album_images.php">
+          <input type="file" size="32" name="image_fields[]" value="" multiple>
+          <input type="hidden" value="<?php echo $album_name ?>" name="album_name">
+          <input type="submit" name="submit" value="upload">
+        </form>
+    <?php } else {
+            header("location: upload_album.php");
         }
-    </script>
-</body>
-</html>
+    ?>
+</div>
+    
+<!-- To Prevent Data Submission on Refresh -->
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+    
+<?php include('footer.php'); ?>
