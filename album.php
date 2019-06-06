@@ -1,7 +1,7 @@
 <?php include_once('header.php'); ?>
-    <section class="images-section">
-       <div class="img-wrapper" id="lightgallery">
-        <?php
+
+<section class="album-section">
+    <?php
             $db->select('images',false ,false, 'id DESC');
             foreach($db->result_array() as $db_row)
             {
@@ -16,7 +16,6 @@
         <?php
             }
         ?>
-        </div>
-    </section>
+</section>
 
-<?php include_once('footer.php'); ?>    
+<?php include_once('footer.php'); ?>

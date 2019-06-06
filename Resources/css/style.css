@@ -1,0 +1,179 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #2d2d2d;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    top: 0;
+    padding: 5px 0;
+}
+.nav {
+    width: 80%;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.nav > ul {
+    display: flex;
+    justify-content: flex-end;
+
+    flex-basis: 40%;
+}
+.nav > ul > li {
+    list-style: none;
+    margin-left: 30px;
+    font-size: 18px;
+}
+.nav > ul > li > a {
+    text-decoration: none;
+    color: #444;
+    padding: 15px 0;
+    position: relative;
+}
+.nav > .logo {
+    text-align: center;
+
+    flex-basis: 20%;
+}
+
+.logo > img {
+    width: 200px;
+    height: auto;
+}
+
+.logo > h3 {
+    margin: 0;
+    font-size: 12px;
+}
+
+.nav > .nav-social {
+    flex-basis: 40%;
+}
+
+.nav-social a {
+    margin-right: 30px;
+    text-decoration: none;
+    color: #444;
+}
+
+.nav > ul > li > a:after {    
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #000;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.nav > ul > li > a:hover:after, .nav > ul > li > a.active:after { 
+  width: 100%; 
+  left: 0; 
+}
+
+.active {
+  font-weight: 500;
+}
+
+.nav .fab {
+    font-size: 30px;            
+}
+
+.fa-facebook:hover {
+    color: #3b5998;
+}
+
+.fa-instagram:hover {
+    color: #3f729b;
+}
+
+.images-section {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 85px;
+    margin-bottom: 20px;
+}
+.img-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  visibility: hidden;
+}
+
+.img-a {
+    background-color: #000;
+    box-shadow: 0 0 100px black;
+}
+
+.img-a > img {
+  display: block;
+  width: 100%;
+
+  border: 1px solid #4e4e4e;
+  border-radius: 3px;
+  box-shadow: 0px 0px 2px #b3b3b3;   
+
+  opacity: 1;   
+}
+
+.img-a > img:hover {
+    opacity: 1;
+    transition: .5s;
+    z-index: 5;
+    box-shadow: none;
+    position: relative;
+    /*transform: scale(1.05);*/
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px #6b6b6b;
+}
+
+/* CSS to maintain the height of last row */
+
+.img-wrapper::after {
+  flex-basis: 18rem;
+}
+
+.img-wrapper::after {
+  content: '';
+  flex-grow: 1000000;
+}
+
+footer {
+    background-color: #fff;
+    padding: 15px;
+
+    display: flex;
+    justify-content: center;
+}
+
+footer > p {
+    margin: 0;
+}
+
+/* Main Content */
+.main-content {
+    width: 80%;
+    margin: 0 auto;
+    color: #fff;
+    
+    margin-top: 100px;
+    margin-bottom: 40px;
+    text-align: justify;
+    font-size: 16px;
+}
+
+.main-content img {
+    width: 100%;
+    height: auto;
+}
