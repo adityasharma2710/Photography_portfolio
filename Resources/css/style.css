@@ -177,3 +177,16 @@ footer > p {
     width: 100%;
     height: auto;
 }
+
+/* Album Page */
+.album-section {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 85px;
+    margin-bottom: 20px;
+}
+
+.album-name > a {
+    color: white;
+    text-decoration: none;
+}

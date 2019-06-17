@@ -3,10 +3,13 @@
 <?php 
     if(!isset($_SESSION['username'])){ 
         header("location: ./login.php");
-    } 
+    }
 ?>
     
 <?php include('header.php'); ?>
+<?php $active_sidenav_tab = ""; ?>
+<?php $active_sidenav_tab = ""; ?>
+
 <?php include('sidenav.php'); ?>
    
 <div class="main">

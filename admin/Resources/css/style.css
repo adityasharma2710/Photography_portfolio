@@ -57,6 +57,10 @@ body {
     transition: .2s;
 }
 
+.btnn-delete {
+    background-color: #ff9999;
+}
+
 .active-sidenav-tab {
     font-size: 18px;
     font-weight: 600;
@@ -82,4 +86,73 @@ h1 {
 .main {
     margin-left: 200px;
     padding: 10px 30px;
+}
+
+/* Upload Section */
+
+.uploadSection {
+    margin: 10px auto;
+    padding: 50px 0;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Edit Section */
+hr {
+    height: 1px;
+    background-color: #ccc;
+    border: none;
+}
+
+.editSection {
+    margin-top: 30px;
+}
+
+.editSection > h2 {
+    text-align: center;
+}
+
+.editImgRowContainer {
+    height: 60vh;
+    overflow-y: scroll;
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.editImgRow {
+    width: 24%;
+    display: inline-block;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.editRowImg {
+    height: 150px;
+    width: auto;
+}
+
+.editAlbumRowContainer {
+    height: 60vh;
+    overflow-y: scroll;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.editAlbumRow {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+.actionButtons {
+    display: flex;
 }

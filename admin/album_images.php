@@ -4,8 +4,15 @@
 } ?>   
 
 <?php
+    require "./db.php";
+
     if(isset($_POST['album_submit'])){
         $album_name = $_POST['album_name'];
+        $db->select('albums', ['album_name' => $album_name]);
+        if($db->row_array()){
+            // get id of existing row
+            $album_ID = ($db->row_array()['id']);
+        }
     }
 ?>
 
@@ -13,8 +20,7 @@
 
     // https://github.com/tschoffelen/db.php
     // https://www.verot.net/php_class_upload_samples.htm
-
-    require "./db.php";
+    
     require "./Vendor/php/class.upload.php";
     //echo date("d-m-Y H:i:s");
     if(isset($_POST['submit'])){
@@ -164,6 +170,7 @@
 ?>
 
 <?php include('header.php'); ?>
+<?php $active_sidenav_tab = "Upload Album"; ?>
 <?php include('sidenav.php'); ?>
  
 <div class="main">
@@ -172,11 +179,48 @@
             echo "<h1>".$album_name."</h1>";       
     ?>        
         <h1>Upload Images</h1>
-        <form enctype="multipart/form-data" method="post" action="album_images.php">
-          <input type="file" size="32" name="image_fields[]" value="" multiple>
-          <input type="hidden" value="<?php echo $album_name ?>" name="album_name">
-          <input type="submit" name="submit" value="upload">
-        </form>
+        <div class="uploadSection">
+            <form enctype="multipart/form-data" method="post" action="album_images.php">
+              <input type="file" size="32" name="image_fields[]" value="" multiple>
+              <input type="hidden" value="<?php echo $album_name ?>" name="album_name">
+              <input type="submit" name="submit" value="upload">
+            </form>
+        </div>
+        
+        <div class="editSection">
+            <h2>Edit Images</h2>
+            <hr>
+            <div class="editImgRowContainer">
+            <?php
+                $db->select('images',['album_id' => $album_ID] ,false, 'id DESC');
+                foreach($db->result_array() as $db_row)
+                {
+                    $img_url = str_replace(' ', '', "../files/".$db_row['img_url']); 
+                    $img_url_thumb_large = str_replace(' ', '', "../files/thumb_large/thumb_large_".$db_row['img_url']); 
+                    $img_url_thumb_small = str_replace(' ', '', "../files/thumb_small/thumb_small_".$db_row['img_url']); 
+
+            ?>
+                <div class="editImgRow">
+                    <!--<a class="editImgLink" href="<?php //echo $img_url; ?>" >-->
+                    <img class="editRowImg" src="<?php echo $img_url_thumb_small; ?>">
+                    <!--</a>-->
+                    <hr>
+                    <select name="" id="">
+                        <option value="">Select Album</option>
+                    </select>
+                    <button class="btnn-update">
+                        Update
+                    </button>
+                    <button class="btnn-delete">
+                        Delete
+                    </button>
+                </div>
+            <?php
+                }
+            ?>
+            </div>
+        </div>
+    
     <?php } else {
             header("location: upload_album.php");
         }
