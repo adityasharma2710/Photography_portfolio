@@ -156,3 +156,37 @@ hr {
 .actionButtons {
     display: flex;
 }
+
+/* Select Album Dropdown */
+.selectDropdown {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    padding: 2px;
+    margin: 0;
+}
+
+.multiselect {
+    width: 200px;
+}
+
+.checkboxes {
+    position: absolute;
+    z-index: 10;
+    display: none;
+    background: #fff;
+    border: 1px #dadada solid;
+    border-radius: 5px;
+    padding: 2px;
+    padding: 10px;
+    text-align: left;
+}
+
+.checkboxes label {
+    display: block;
+}
+
+.checkboxes label:hover {
+    background-color: #1e90ff;
+}

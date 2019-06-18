@@ -137,14 +137,74 @@
 ?>
 
 <?php include('header.php'); ?>
+<?php $active_sidenav_tab = "Upload Images"; ?>
 <?php include('sidenav.php'); ?>
    
 <div class="main">   
     <h1>Upload Images</h1>
-    <form enctype="multipart/form-data" method="post" action="upload_images.php">
-      <input type="file" size="32" name="image_fields[]" value="" multiple>
-      <input type="submit" name="submit" value="upload">
-    </form>
+    <div class="uploadSection">
+        <form enctype="multipart/form-data" method="post" action="upload_images.php">
+          <input type="file" size="32" name="image_fields[]" value="" multiple>
+          <input type="submit" name="submit" value="upload">
+        </form>
+    </div>
+    
+    <div class="editSection">
+            <h2>Edit Images</h2>
+            <hr>
+            <div class="editImgRowContainer">
+            <?php
+                $db->select('images', false, false, 'id DESC');
+                foreach($db->result_array() as $db_row)
+                {
+                    
+                    $img_ID = $db_row['id'];
+                    $img_url = str_replace(' ', '-', "../files/".$db_row['img_url']); 
+                    $img_url_thumb_large = str_replace(' ', '-', "../files/thumb_large/thumb_large_".$db_row['img_url']); 
+                    $img_url_thumb_small = str_replace(' ', '-', "../files/thumb_small/thumb_small_".$db_row['img_url']); 
+
+            ?>
+                <div class="editImgRow">
+                    <!--<a class="editImgLink" href="<?php //echo $img_url; ?>" >-->
+                    <img class="editRowImg" src="<?php echo $img_url_thumb_small; ?>">
+                    <!--</a>-->
+                    <hr>
+                    
+                    
+                    <!-- Update Album -->
+                    <form>
+                        <div class="multiselect">
+
+                            <div class="selectBox" id="selectBox<?php echo $img_ID; ?>" pointID="<?php echo $img_ID; ?>" onclick="showCheckboxes('<?php echo $img_ID; ?>')">
+                                <p class="selectDropdown"><span id="chkb_v<?php echo $img_ID; ?>">Select Album</span> &#9662;</p>
+                            </div>
+                            
+                            <div class="checkboxes" id="checkBox<?php echo $img_ID; ?>" onclick="checkbox_update('<?php echo $img_ID; ?>')">
+                                <label for="one<?php echo $img_ID; ?>">
+                                <input type="checkbox" id="one<?php echo $img_ID; ?>" name="chkb<?php echo $img_ID; ?>" value="one"/>First checkbox<?php echo $img_ID; ?></label>
+                                
+                                <label for="two<?php echo $img_ID; ?>">
+                                <input type="checkbox" id="two<?php echo $img_ID; ?>" name="chkb<?php echo $img_ID; ?>" value="two"/>Second checkbox</label>
+                                
+                                <label for="three<?php echo $img_ID; ?>">
+                                <input type="checkbox" id="three<?php echo $img_ID; ?>" name="chkb<?php echo $img_ID; ?>" value="three"/>Third checkbox</label>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- Delete File -->
+                    <form action="delete.php" method="post" enctype="multipart/form-data" id="form_del_<?php echo $img_ID; ?>">
+                        <input type="hidden" name="file_id" value="<?php echo $img_ID; ?>">
+                        <input type="hidden" name="file_type" value="images">
+                        <input type="hidden" name="file_back_url" value="upload_images.php">
+                        <input class="btnn-delete" type="submit" name="delete_submit" value="Delete">
+                    </form>
+                </div>
+            <?php
+                }
+            ?>
+            </div>
+        </div>
 </div>
    
 <!-- To Prevent Data Submission on Refresh -->
@@ -152,6 +212,90 @@
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
     }
+</script>
+   
+<script>
+    var elementToDel = document.getElementsByClassName("btnn-delete");
+    
+    for (i = 0; i < elementToDel.length; i++) {
+        elementToDel[i].addEventListener("click", function(event){
+            event.preventDefault();
+            var del_cnf = confirm("Confirm DELETE");
+            
+            if(del_cnf){
+                var formToSubmit = this.parentElement.getAttribute("id");
+                document.getElementById(formToSubmit).submit();
+            }
+        });
+    }
+
+</script>
+   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+
+    function showCheckboxes(pointID) {
+        var checkboxes = document.getElementById("checkBox"+pointID);
+        if (checkboxes.style.display === "block") {
+            checkboxes.style.display = "none";
+        } else {
+            checkboxes.style.display = "block";
+        }
+        checkbox_update(pointID);
+    }
+
+    function checkbox_update(pointID) {
+        console.log(pointID);
+        var yourArray = [];
+        $("input:checkbox[name='chkb"+pointID+"']:checked").each(function(){
+            yourArray.push($(this).val());
+        });
+        console.log(yourArray);
+        $(".chkb_v"+pointID).html( yourArray.length + " Selected");
+    }
+
+    $(document).ready(function(){
+        //checkbox_update();
+    });
+
+//    window.addEventListener('click', function(e){
+//
+//        var selectBox = document.getElementsByClassName('selectBox');
+//        var checkboxes = document.getElementsByClassName('checkboxes');
+//        
+//        for(i=0; i<selectBox.length; i++){
+//            var pointID = 0;
+//
+//            if (selectBox[i].contains(e.target)){
+//                
+//                pointID = selectBox[i].getAttribute("pointID");
+//
+//                console.log(pointID);
+//                // Clicked in box
+//                showCheckboxes(i, pointID);
+//            } else {
+//                // Clicked outside the box
+//                checkboxes[i].style.display = "none";
+//            }
+//        }
+//        
+//    });
+        
+//    window.addEventListener('click', function(e){
+//        var checkboxes = document.getElementsByClassName('checkboxes');
+//        for(i=0; i<checkboxes.length; i++){
+//            if(checkboxes[i].contains(e.target)) {
+//              checkbox_update();
+//                console.log(i);
+//            } else {
+//                // Clicked outside the box
+//                //checkboxes[i].style.display = "none";
+//                //checkbox_update();
+//            }
+//        }
+//
+//    });
+
 </script>
     
 <?php include('footer.php'); ?>

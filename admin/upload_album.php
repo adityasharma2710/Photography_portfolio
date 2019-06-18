@@ -37,9 +37,12 @@
                         <input class="btnn-update" type="submit" name="album_submit" value="Edit">
                     </form>
                     
-                    <button class="btnn-delete">
-                        Delete
-                    </button>
+                    <form action="delete.php" method="post" enctype="multipart/form-data" id="form_del_<?php echo $album_id; ?>">
+                        <input type="hidden" name="file_id" value="<?php echo $album_id; ?>">
+                        <input type="hidden" name="file_type" value="albums">
+                        <input type="hidden" name="file_back_url" value="upload_album.php">
+                        <input class="btnn-delete" type="submit" name="delete_submit" value="Delete">
+                    </form>
                 </div>
             </div>
         <?php
@@ -54,6 +57,23 @@
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
     }
+</script>
+   
+<script>
+    var elementToDel = document.getElementsByClassName("btnn-delete");
+    
+    for (i = 0; i < elementToDel.length; i++) {
+        elementToDel[i].addEventListener("click", function(event){
+            event.preventDefault();
+            var del_cnf = confirm("Confirm DELETE");
+            
+            if(del_cnf){
+                var formToSubmit = this.parentElement.getAttribute("id");
+                document.getElementById(formToSubmit).submit();
+            }
+        });
+    }
+
 </script>
     
 <?php include('footer.php'); ?>
