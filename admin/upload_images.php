@@ -245,13 +245,13 @@
     }
 
     function checkbox_update(pointID) {
-        console.log(pointID);
+        console.log("chk"+pointID);
         var yourArray = [];
         $("input:checkbox[name='chkb"+pointID+"']:checked").each(function(){
             yourArray.push($(this).val());
         });
-        console.log(yourArray);
-        $(".chkb_v"+pointID).html( yourArray.length + " Selected");
+        console.log(yourArray.length);
+        $("#chkb_v"+pointID).html( yourArray.length + " Selected");
     }
 
     $(document).ready(function(){
