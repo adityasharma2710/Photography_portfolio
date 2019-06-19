@@ -154,6 +154,19 @@
             <hr>
             <div class="editImgRowContainer">
             <?php
+//                $ser = serialize([1,2,3,4,5]);
+//                $unser = unserialize($ser);
+//                echo $ser;
+//                echo "<br>";
+//                print_r($unser);
+//                
+//                if (in_array("2", $unser)){
+//                  echo "Match found";
+//                } else {
+//                  echo "Match not found";
+//                }
+                
+                
                 $db->select('images', false, false, 'id DESC');
                 foreach($db->result_array() as $db_row)
                 {
@@ -173,7 +186,7 @@
                     
                     
                     <!-- Update Album -->
-                    <form>
+                    <form action="" method="post" enctype="multipart/form-data" id="form_update_<?php echo $img_ID; ?>">
                         <div class="multiselect">
 
                             <div class="selectBox" id="selectBox<?php echo $img_ID; ?>" pointID="<?php echo $img_ID; ?>" onclick="showCheckboxes('<?php echo $img_ID; ?>')">
@@ -197,6 +210,8 @@
                                 <?php        
                                     }
                                 ?>
+                                <input type="hidden" name="incAlbumInc<?php echo $img_ID; ?>">
+                                <input type="submit" name="albumInc_submit" value="Update">
                             </div>
                         </div>
                     </form>
@@ -254,13 +269,13 @@
     }
 
     function checkbox_update(pointID) {
-        console.log("chk"+pointID);
         var yourArray = [];
         $("input:checkbox[name='chkb"+pointID+"']:checked").each(function(){
             yourArray.push($(this).val());
         });
-        console.log(yourArray.length);
+        console.log(yourArray);
         $("#chkb_v"+pointID).html( yourArray.length + " Selected");
+        $('[name=incAlbumInc'+pointID+']').val(yourArray); 
     }
 
     $(document).ready(function(){
