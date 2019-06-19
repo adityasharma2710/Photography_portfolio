@@ -159,6 +159,7 @@
                 {
                     
                     $img_ID = $db_row['id'];
+                    $imgAlbum_ID = $db_row['album_id'];
                     $img_url = str_replace(' ', '-', "../files/".$db_row['img_url']); 
                     $img_url_thumb_large = str_replace(' ', '-', "../files/thumb_large/thumb_large_".$db_row['img_url']); 
                     $img_url_thumb_small = str_replace(' ', '-', "../files/thumb_small/thumb_small_".$db_row['img_url']); 
@@ -180,14 +181,22 @@
                             </div>
                             
                             <div class="checkboxes" id="checkBox<?php echo $img_ID; ?>" onclick="checkbox_update('<?php echo $img_ID; ?>')">
-                                <label for="one<?php echo $img_ID; ?>">
-                                <input type="checkbox" id="one<?php echo $img_ID; ?>" name="chkb<?php echo $img_ID; ?>" value="one"/>First checkbox<?php echo $img_ID; ?></label>
-                                
-                                <label for="two<?php echo $img_ID; ?>">
-                                <input type="checkbox" id="two<?php echo $img_ID; ?>" name="chkb<?php echo $img_ID; ?>" value="two"/>Second checkbox</label>
-                                
-                                <label for="three<?php echo $img_ID; ?>">
-                                <input type="checkbox" id="three<?php echo $img_ID; ?>" name="chkb<?php echo $img_ID; ?>" value="three"/>Third checkbox</label>
+                               
+                                <?php 
+                                    $db->select('albums', false, false, 'id DESC');
+                                    foreach($db->result_array() as $db_row) {
+                                        $album_ID = $db_row['id'];
+                                        $album_name = $db_row['album_name'];
+                                        $checked = "";
+                                        if($imgAlbum_ID === $album_ID){
+                                            $checked = "checked";
+                                        }
+                                ?>
+                                        <label for="<?php echo $album_ID.'_'.$img_ID; ?>">
+                                        <input type="checkbox" id="<?php echo $album_ID.'_'.$img_ID; ?>" name="chkb<?php echo $img_ID; ?>" value="<?php echo $album_ID; ?>" <?php echo $checked ?>/><?php echo $album_name; ?></label>
+                                <?php        
+                                    }
+                                ?>
                             </div>
                         </div>
                     </form>
