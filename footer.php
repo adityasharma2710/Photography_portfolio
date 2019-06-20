@@ -31,9 +31,16 @@
     <script src="Vendors/js/js-migerate.js"></script>
     <script src="Vendors/js/js-migerate2.js"></script>
     <script src="Vendors/js/lightgallery.min.js"></script>
+    <script src="Vendors/js/lg-share.js"></script>
+    <script src="Vendors/js/lg-fullscreen.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#lightgallery").lightGallery(); 
+            $("#lightgallery").lightGallery({
+                share: true,
+                twitter: false,
+                googlePlus: false,
+                pinterest: false
+            }); 
         });
     </script>
     

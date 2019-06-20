@@ -172,7 +172,7 @@
                 {
                     
                     $img_ID = $db_row['id'];
-                    $imgAlbum_ID = $db_row['album_id'];
+                    $imgAlbum_ID = explode(",",unserialize(base64_decode($db_row['album_id'])));
                     $img_url = str_replace(' ', '-', "../files/".$db_row['img_url']); 
                     $img_url_thumb_large = str_replace(' ', '-', "../files/thumb_large/thumb_large_".$db_row['img_url']); 
                     $img_url_thumb_small = str_replace(' ', '-', "../files/thumb_small/thumb_small_".$db_row['img_url']); 
@@ -186,7 +186,7 @@
                     
                     
                     <!-- Update Album -->
-                    <form action="" method="post" enctype="multipart/form-data" id="form_update_<?php echo $img_ID; ?>">
+                    <form action="update.php" method="post" enctype="multipart/form-data" id="form_update_<?php echo $img_ID; ?>">
                         <div class="multiselect">
 
                             <div class="selectBox" id="selectBox<?php echo $img_ID; ?>" pointID="<?php echo $img_ID; ?>" onclick="showCheckboxes('<?php echo $img_ID; ?>')">
@@ -201,7 +201,7 @@
                                         $album_ID = $db_row['id'];
                                         $album_name = $db_row['album_name'];
                                         $checked = "";
-                                        if($imgAlbum_ID === $album_ID){
+                                        if(in_array($album_ID, $imgAlbum_ID)){
                                             $checked = "checked";
                                         }
                                 ?>
@@ -210,9 +210,13 @@
                                 <?php        
                                     }
                                 ?>
-                                <input type="hidden" name="incAlbumInc<?php echo $img_ID; ?>">
-                                <input type="submit" name="albumInc_submit" value="Update">
+                                
+                                
                             </div>
+                            <input type="hidden" name="file_id" value="<?php echo $img_ID; ?>">
+                            <input type="hidden" name="imgAlbumInc<?php echo $img_ID; ?>">
+                            <input type="hidden" name="file_back_url" value="upload_images.php">
+                            <input type="submit" name="albumInc_submit" value="Update">
                         </div>
                     </form>
                     
@@ -275,7 +279,7 @@
         });
         console.log(yourArray);
         $("#chkb_v"+pointID).html( yourArray.length + " Selected");
-        $('[name=incAlbumInc'+pointID+']').val(yourArray); 
+        $('[name=imgAlbumInc'+pointID+']').val(yourArray); 
     }
 
     $(document).ready(function(){

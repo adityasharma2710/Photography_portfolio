@@ -192,29 +192,35 @@
             <hr>
             <div class="editImgRowContainer">
             <?php
-                $db->select('images',['album_id' => $album_ID] ,false, 'id DESC');
+                $db->select('images',false ,false, 'id DESC');
                 foreach($db->result_array() as $db_row)
                 {
+                    $imgAlbum_ID = explode(",",unserialize(base64_decode($db_row['album_id'])));
                     $img_url = str_replace(' ', '-', "../files/".$db_row['img_url']); 
                     $img_url_thumb_large = str_replace(' ', '-', "../files/thumb_large/thumb_large_".$db_row['img_url']); 
                     $img_url_thumb_small = str_replace(' ', '-', "../files/thumb_small/thumb_small_".$db_row['img_url']); 
 
             ?>
-                <div class="editImgRow">
-                    <!--<a class="editImgLink" href="<?php //echo $img_url; ?>" >-->
-                    <img class="editRowImg" src="<?php echo $img_url_thumb_small; ?>">
-                    <!--</a>-->
-                    <hr>
-                    <select name="" id="">
-                        <option value="">Select Album</option>
-                    </select>
-                    <button class="btnn-update">
-                        Update
-                    </button>
-                    <button class="btnn-delete">
-                        Delete
-                    </button>
-                </div>
+                
+                <?php
+                    if(in_array($album_ID, $imgAlbum_ID)){
+                ?>
+                    <div class="editImgRow">
+                        <img class="editRowImg" src="<?php echo $img_url_thumb_small; ?>">
+                        <hr>
+                        <select name="" id="">
+                            <option value="">Select Album</option>
+                        </select>
+                        <button class="btnn-update">
+                            Update
+                        </button>
+                        <button class="btnn-delete">
+                            Delete
+                        </button>
+                    </div>
+                <?php
+                    }
+                ?>
             <?php
                 }
             ?>
