@@ -1,4 +1,4 @@
-<?php include_once('header.php'); ?>
+ <?php include_once('header.php'); ?>
 
 <section class="album-section">
     <?php

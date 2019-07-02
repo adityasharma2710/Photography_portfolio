@@ -1,4 +1,4 @@
-<?php
+ <?php
     require "./admin/Vendor/php/class.database.php";
 
     $host = "localhost";

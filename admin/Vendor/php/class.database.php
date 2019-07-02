@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /**
  * Exception helper for the Database class
